@@ -4,9 +4,7 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 
 ## 1. What was broken when you started?
 
-- What did the game look like the first time you ran it?
-- List at least two concrete bugs you noticed at the start  
-  (for example: "the hints were backwards").
+The first thing I noticed when playing the game was that my score kept going up even when I was guessing wrong. That immediately felt off because you should not be rewarded for a bad guess. After playing a few more rounds I also noticed the hints were sending me in the wrong direction and Hard mode seemed way too easy compared to Normal.
 
 **Bug Reproduction Log**
 
@@ -14,38 +12,28 @@ Document at least 3 bugs you found. Add rows as needed.
 
 | Input | Expected Behavior | Actual Behavior | Console Output / Error |
 |-------|-------------------|-----------------|------------------------|
-| | | | |
-| | | | |
-| | | | |
-
+|Guess of 80, secret is 73|Go LOWER hint|Go HIGHER hint shown|none|
+|Correct guess on attempt 2|Win declared|Game continued like I was wrong|none|
+|Switch to Hard difficulty|Harder range than Normal|Range was 1 to 50, easier than Normal|none|
 ---
 
 ## 2. How did you use AI as a teammate?
 
-- Which AI tools did you use on this project (for example: ChatGPT, Gemini, Copilot)?
-- Give one example of an AI suggestion that was correct (including what the AI suggested and how you verified the result).
-- Give one example of an AI suggestion that was incorrect or misleading (including what the AI suggested and how you verified the result).
+I used Claude as my AI assistant. It correctly suggested moving all the game logic into logic_utils.py which made testing way easier and I verified it by running pytest and seeing all 10 tests pass. On the other hand the original AI generated code had a bug disguised as a feature where it converted the secret to a string on even attempts, which broke win detection, and I only caught it by actually playing the game.
 
 ---
 
 ## 3. Debugging and testing your fixes
 
-- How did you decide whether a bug was really fixed?
-- Describe at least one test you ran (manual or using pytest)  
-  and what it showed you about your code.
-- Did AI help you design or understand any tests? How?
+I verified fixes by running pytest and playing the game in the browser. For the hint bug I guessed 80 against a secret of 73 and confirmed it said "Go LOWER." For the score bug I watched the debug panel and confirmed the score dropped after every wrong guess.
 
 ---
 
 ## 4. What did you learn about Streamlit and state?
 
-- How would you explain Streamlit "reruns" and session state to a friend who has never used Streamlit?
-
+Streamlit reruns the whole script every time you interact with anything, so session state is what keeps the game from resetting the secret number every time you click submit.
 ---
 
 ## 5. Looking ahead: your developer habits
 
-- What is one habit or strategy from this project that you want to reuse in future labs or projects?
-  - This could be a testing habit, a prompting strategy, or a way you used Git.
-- What is one thing you would do differently next time you work with AI on a coding task?
-- In one or two sentences, describe how this project changed the way you think about AI generated code.
+I want to keep writing tests right after fixing bugs instead of at the end because it forces you to define what fixed actually means. This project taught me that AI generated code still needs a human to actually play with it and catch what the AI cannot see.
